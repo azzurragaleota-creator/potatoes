@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quale Patata? 🥔 — Campania Patate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-dark:  #1B3D2C;
+      --green-mid:   #2C5F44;
+      --green-light: #4A9068;
+      --green-pale:  #D4EDE0;
+      --potato:      #8B5E3C;
+      --potato-gold: #C9922A;
+      --gold-light:  #F0C84A;
+      --cream:       #FDF7EE;
+      --warm-bg:     #FEFCF8;
+      --text-dark:   #1A2E22;
+      --text-mid:    #3D5A47;
+      --shadow:      rgba(30,61,47,.12);
+      --r:           16px;
+      --rl:          24px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--warm-bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ────────────────────────────────────── */
+    .header {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+      box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    }
+    .header-logo { height: 44px; }
+    .header-badge {
+      font-size: .75rem; font-weight: 700;
+      color: rgba(255,255,255,.65);
+      letter-spacing: .03em;
+    }
+
+    /* ── SCREENS ───────────────────────────────────── */
+    .screen { display: none; }
+    .screen.active { display: block; animation: fadeUp .35s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HOME ──────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(150deg, var(--green-dark) 0%, var(--green-mid) 55%, var(--green-light) 100%);
+      padding: 56px 24px 72px;
+      text-align: center;
+      color: white;
+    }
+    .hero-potato {
+      font-size: 84px;
+      display: block;
+      margin-bottom: 14px;
+      animation: bounce 2.4s ease-in-out infinite;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.3));
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50%      { transform: translateY(-14px) rotate(3deg); }
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      opacity: .85;
+      max-width: 380px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .mode-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      padding: 28px 20px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .mode-card {
+      background: white;
+      border-radius: var(--rl);
+      padding: 28px 16px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: all .22s ease;
+      user-select: none;
+    }
+    .mode-card:hover, .mode-card:active {
+      transform: translateY(-4px);
+      border-color: var(--green-light);
+      box-shadow: 0 10px 32px var(--shadow);
+    }
+    .mode-card .mc-icon { font-size: 52px; display: block; margin-bottom: 12px; }
+    .mode-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--green-dark);
+      margin-bottom: 6px;
+    }
+    .mode-card p { font-size: .8rem; color: var(--text-mid); line-height: 1.4; }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--green-dark);
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .variety-section {
+      padding: 0 20px 48px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .variety-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .v-chip {
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all .18s ease;
+      border: 2px solid transparent;
+    }
+    .v-chip:hover { transform: scale(1.06); filter: brightness(.95); }
+
+    /* ── SUB-HEADER (back row) ─────────────────────── */
+    .sub-header {
+      background: var(--green-dark);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .back-btn {
+      background: none; border: none;
+      color: white; font-size: 1.5rem;
+      cursor: pointer; line-height: 1;
+      padding: 2px 6px;
+      border-radius: 8px;
+      transition: background .15s;
+    }
+    .back-btn:hover { background: rgba(255,255,255,.15); }
+    .sub-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: white; font-size: 1.25rem;
+    }
+
+    /* ── FINDER ────────────────────────────────────── */
+    .dish-intro {
+      text-align: center;
+      padding: 20px 20px 4px;
+      color: var(--text-mid);
+      font-size: .95rem;
+    }
+    .dish-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 16px 20px 40px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .dish-card {
+      background: white;
+      border-radius: var(--r);
+      padding: 18px 8px 14px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      box-shadow: 0 2px 12px var(--shadow);
+      transition: all .2s ease;
+      user-select: none;
+    }
+    .dish-card:hover, .dish-card:active {
+      transform: translateY(-3px);
+      border-color: var(--potato-gold);
+      box-shadow: 0 6px 24px var(--shadow);
+    }
+    .dish-card .d-emoji { font-size: 38px; display: block; margin-bottom: 8px; }
+    .dish-card .d-name  { font-size: .72rem; font-weight: 800; color: var(--green-dark); line-height: 1.2; }
+
+    /* ── SLOT OVERLAY ──────────────────────────────── */
+    .slot-overlay {
+      position: fixed; inset: 0;
+      background: rgba(20,50,35,.93);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 200;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .slot-overlay.show { opacity: 1; pointer-events: all; }
+
+    .slot-box {
+      background: var(--cream);
+      border-radius: var(--rl);
+      padding: 32px 28px 28px;
+      text-align: center;
+      width: min(340px, 92vw);
+      box-shadow: 0 24px 60px rgba(0,0,0,.4);
+    }
+    .slot-box-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--green-dark);
+      margin-bottom: 4px;
+    }
+    .slot-box-dish { font-size: .9rem; color: var(--text-mid); margin-bottom: 20px; }
+
+    .slot-window {
+      height: 120px;
+      overflow: hidden;
+      border-radius: 14px;
+      background: var(--green-dark);
+      border: 3px solid var(--gold-light);
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .slot-window::before, .slot-window::after {
+      content: '';
+      position: absolute; left: 0; right: 0; height: 34px; z-index: 2;
+      pointer-events: none;
+    }
+    .slot-window::before { top: 0; background: linear-gradient(to bottom, var(--green-dark), transparent); }
+    .slot-window::after  { bottom: 0; background: linear-gradient(to top, var(--green-dark), transparent); }
+
+    .slot-reel { display: flex; flex-direction: column; }
+    .slot-item {
+      height: 120px; flex-shrink: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .slot-item .si-emoji { font-size: 42px; }
+    .slot-item .si-name  { font-weight: 900; color: white; font-size: .9rem; margin-top: 4px; }
+
+    .slot-msg {
+      font-size: .88rem;
+      color: var(--text-mid);
+      min-height: 1.4em;
+      font-weight: 700;
+    }
+
+    /* ── RESULT ────────────────────────────────────── */
+    .result-hero {
+      padding: 48px 24px 56px;
+      text-align: center;
+      color: white;
+    }
+    .result-emoji { font-size: 76px; display: block; margin-bottom: 14px; filter: drop-shadow(0 4px 10px rgba(0,0,0,.3)); }
+    .result-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.22);
+      border: 1px solid rgba(255,255,255,.4);
+      border-radius: 999px;
+      padding: 4px 16px;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      margin-bottom: 12px;
+    }
+    .result-name { font-family: 'Playfair Display', serif; font-size: 2.3rem; margin-bottom: 8px; }
+    .result-tagline { font-size: 1rem; opacity: .85; }
+
+    .result-content {
+      padding: 20px 20px 48px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .r-card {
+      background: white;
+      border-radius: var(--r);
+      padding: 22px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+    .r-card h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--green-dark);
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
+    .r-card p { color: var(--text-mid); line-height: 1.65; font-size: .93rem; }
+    .r-tip { background: var(--green-pale); border-left: 4px solid var(--green-light); }
+    .r-tip h3 { color: var(--green-dark); }
+
+    .ideal-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .ideal-tag {
+      background: var(--green-pale);
+      color: var(--green-dark);
+      border-radius: 999px;
+      padding: 4px 13px;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+
+    .result-actions { display: flex; gap: 12px; margin-top: 4px; }
+    .btn { flex: 1; border-radius: var(--r); padding: 15px; font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 800; cursor: pointer; transition: all .2s ease; border: none; }
+    .btn-green { background: var(--green-mid); color: white; }
+    .btn-green:hover { background: var(--green-dark); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--green-mid); border: 2px solid var(--green-mid); }
+    .btn-outline:hover { background: var(--green-pale); }
+
+    /* ── QUIZ ──────────────────────────────────────── */
+    .quiz-topbar {
+      background: var(--green-dark);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .quiz-score-display { font-weight: 900; font-size: 1.05rem; color: var(--gold-light); }
+    .quiz-q-counter { font-size: .82rem; color: rgba(255,255,255,.65); font-weight: 700; }
+    .progress-bar { height: 5px; background: rgba(255,255,255,.15); }
+    .progress-fill { height: 100%; background: var(--gold-light); transition: width .35s ease; }
+
+    .quiz-body {
+      padding: 28px 20px 48px;
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .quiz-dish-emoji { font-size: 72px; display: block; margin-bottom: 16px; }
+    .quiz-q-text { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--green-dark); margin-bottom: 6px; line-height: 1.3; }
+    .quiz-dish-label { font-size: 1.05rem; color: var(--text-mid); margin-bottom: 28px; font-weight: 700; }
+
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .q-opt {
+      background: white;
+      border: 2px solid #DDE8E2;
+      border-radius: var(--r);
+      padding: 20px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .18s ease;
+      box-shadow: 0 2px 12px var(--shadow);
+      user-select: none;
+    }
+    .q-opt:hover:not(.disabled) { border-color: var(--potato-gold); transform: translateY(-2px); }
+    .q-opt .qo-emoji { font-size: 34px; display: block; margin-bottom: 8px; }
+    .q-opt .qo-name  { font-weight: 900; font-size: .88rem; color: var(--green-dark); display: block; }
+    .q-opt .qo-type  { font-size: .72rem; color: var(--text-mid); }
+    .q-opt.correct { background: #D4EDDA; border-color: #28A745; animation: pop .35s ease; }
+    .q-opt.wrong   { background: #F8D7DA; border-color: #DC3545; animation: shake .35s ease; }
+    .q-opt.disabled { pointer-events: none; }
+
+    @keyframes pop   { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 30%{transform:translateX(-7px)} 70%{transform:translateX(7px)} }
+
+    .quiz-feedback {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: var(--r);
+      font-size: .88rem;
+      font-weight: 700;
+      line-height: 1.5;
+      display: none;
+      text-align: left;
+    }
+    .quiz-feedback.show { display: block; }
+    .fb-ok  { background: #D4EDDA; color: #155724; }
+    .fb-err { background: #F8D7DA; color: #721C24; }
+
+    /* QUIZ END */
+    .quiz-end { padding: 48px 24px; text-align: center; max-width: 500px; margin: 0 auto; }
+    .qe-emoji { font-size: 88px; display: block; margin-bottom: 16px; }
+    .qe-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--green-dark); margin-bottom: 10px; }
+    .qe-score { font-size: 3.2rem; font-weight: 900; color: var(--potato-gold); margin: 14px 0; }
+    .qe-msg { color: var(--text-mid); font-size: 1rem; line-height: 1.6; margin-bottom: 28px; }
+    .qe-actions { display: flex; gap: 12px; }
+
+    /* ── CONFETTI ───────────────────────────────────── */
+    #confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 300; }
+    .cp {
+      position: absolute; top: -12px;
+      border-radius: 3px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall { to { transform: translateY(105vh) rotate(720deg); opacity: 0; } }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    .footer {
+      background: var(--green-dark);
+      padding: 24px;
+      text-align: center;
+      color: rgba(255,255,255,.5);
+      font-size: .8rem;
+      line-height: 1.8;
+    }
+    .footer a { color: var(--green-pale); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ────────────────────────────────── */
+    @media (max-width: 360px) {
+      .mode-cards { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 600px) {
+      .dish-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="confetti"></div>
+
+<!-- HEADER -->
+<header class="header">
+  <img src="https://www.campaniapatate.com/wp-content/uploads/2026/01/campania-patate-logo-white.svg"
+       alt="Campania Patate" class="header-logo"
+       onerror="this.outerHTML='<span style=\'color:white;font-family:serif;font-weight:700;font-size:1.1rem\'>🥔 Campania Patate</span>'">
+  <span class="header-badge">🎮 Il Gioco delle Patate</span>
+</header>
+
+<!-- ═══════════════════════════════ HOME ════════════════════════════════ -->
+<div id="s-home" class="screen active">
+  <div class="hero">
+    <span class="hero-potato">🥔</span>
+    <h1>Noi non siamo<br>tutte uguali!</h1>
+    <p>Scopri quale varietà Campania Patate è perfetta per il tuo piatto preferito</p>
+  </div>
+
+  <div class="mode-cards">
+    <div class="mode-card" onclick="goto('s-finder')">
+      <span class="mc-icon">🍳</span>
+      <h2>Ho una ricetta</h2>
+      <p>Scegli un piatto e scopri la patata giusta con la slot machine!</p>
+    </div>
+    <div class="mode-card" onclick="startQuiz()">
+      <span class="mc-icon">👨‍🍳</span>
+      <h2>Sfida Chef</h2>
+      <p>Metti alla prova le tue conoscenze sulle nostre patate</p>
+    </div>
+  </div>
+
+  <div class="variety-section">
+    <p class="section-title">Le nostre varietà</p>
+    <div class="variety-chips" id="vchips"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ FINDER ══════════════════════════════ -->
+<div id="s-finder" class="screen">
+  <div class="sub-header">
+    <button class="back-btn" onclick="goto('s-home')">←</button>
+    <h2>Cosa vuoi preparare?</h2>
+  </div>
+  <p class="dish-intro">Tocca un piatto per scoprire la patata perfetta 👇</p>
+  <div class="dish-grid" id="dishGrid"></div>
+</div>
+
+<!-- ═══════════════════════════════ RESULT ══════════════════════════════ -->
+<div id="s-result" class="screen">
+  <div class="sub-header">
+    <button class="back-btn" id="resultBack">←</button>
+    <h2>Ecco la tua patata!</h2>
+  </div>
+  <div id="resultHero" class="result-hero"></div>
+  <div id="resultContent" class="result-content"></div>
+</div>
+
+<!-- ═══════════════════════════════ QUIZ ════════════════════════════════ -->
+<div id="s-quiz" class="screen">
+  <div class="quiz-topbar">
+    <button class="back-btn" onclick="goto('s-home')">←</button>
+    <div class="quiz-score-display">⭐ <span id="qScore">0</span> punti</div>
+    <div class="quiz-q-counter"><span id="qNum">1</span>/<span id="qTot">8</span></div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="qProg" style="width:0%"></div></div>
+  <div id="quizBody"></div>
+</div>
+
+<!-- ═══════════════════════════════ SLOT OVERLAY ════════════════════════ -->
+<div class="slot-overlay" id="slotOverlay">
+  <div class="slot-box">
+    <div class="slot-box-title">🎰 La slot sta girando…</div>
+    <div class="slot-box-dish" id="slotLabel"></div>
+    <div class="slot-window">
+      <div class="slot-reel" id="slotReel"></div>
+    </div>
+    <div class="slot-msg" id="slotMsg">Sto cercando la patata giusta…</div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🥔 <strong style="color:rgba(255,255,255,.8)">Campania Patate</strong></div>
+  <div><a href="https://www.campaniapatate.com" target="_blank">www.campaniapatate.com</a></div>
+  <div style="margin-top:6px">Le migliori patate della Campania, dalla terra alla tua tavola</div>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════════════════════════
+const V = {
+  crock4all: {
+    id:'crock4all', name:'Crock4All', type:'Tipo BC • Farinosa',
+    emoji:'🥔', color:'#7A5230', pale:'#F3E5D3',
+    tagline:'Alta farinosità, bassa umidità',
+    desc:'La patata nata per gnocchi leggeri e crocchè napoletani cremosi. L\'alta farinosità e il basso contenuto idrico rendono l\'impasto facile da lavorare, con risultati sempre perfetti.',
+    for:['🫓 Gnocchi','🧆 Crocchè','🥣 Purè','🍕 Pizza di patate'],
+    tip:'Con Crock4All assorbi meno farina negli gnocchi: risultano più leggeri, più morbidi e più digeribili.'
+  },
+  crisps4all: {
+    id:'crisps4all', name:'Crisps4All', type:'Tipo BC • Per friggere',
+    emoji:'🍟', color:'#B07810', pale:'#FFF4D0',
+    tagline:'Fritta dorata, croccante al punto giusto',
+    desc:'Selezionata con cura per il contenuto di amido ideale alla frittura. Doratura uniforme, croccantezza duratura e meno olio assorbito. La scelta dei veri amanti della frittura.',
+    for:['🍟 Chips & patatine','🔥 Frittura mista','🥘 Patatine al forno croccanti','🧆 Crocchette fritte'],
+    tip:'La temperatura ideale è 160–180 °C. La reazione di Maillard crea quella crosta dorata e profumata che tutti adoriamo.'
+  },
+  talentine: {
+    id:'talentine', name:'Talentine', type:'Tipo A • Pasta soda',
+    emoji:'🥗', color:'#2A5C43', pale:'#C8EDD9',
+    tagline:'Soda, elegante, non si sfalda mai',
+    desc:'La patata a pasta soda per eccellenza. Non si sfalda durante la cottura, mantiene la forma perfetta in ogni preparazione e conserva più nutrienti rispetto alla bollitura.',
+    for:['🥗 Insalata di patate','♨️ Al vapore','🥘 Al forno','🫙 Lessate in padella'],
+    tip:'Al vapore conserva fino al 40% in più di vitamina C rispetto alla cottura in acqua bollente.'
+  },
+  fresca: {
+    id:'fresca', name:'Fresca Campana', type:'Varietà: Sunita & Efera • Polpa gialla',
+    emoji:'🌕', color:'#9A7010', pale:'#FFF8D0',
+    tagline:'Polpa gialla, sapore intenso e ricco',
+    desc:'Il brand Fresca Campana raccoglie le varietà a polpa gialla come Sunita ed Efera. Colore brillante, aroma avvolgente, sapore pieno. Protagoniste in qualsiasi piatto: dalla zuppa rustica al contorno raffinato.',
+    for:['🌿 Contorno','🍲 Zuppa','♨️ Al vapore','🥣 Purè dorato','🥘 Forno rustico'],
+    tip:'La polpa gialla è ricca di carotenoidi: non solo bellissima nel piatto, ma anche più nutriente!'
+  }
+};
+
+const DISHES = [
+  {id:'gnocchi',   name:'Gnocchi',         emoji:'🫓', v:'crock4all',  why:'L\'alta farinosità di Crock4All crea gnocchi che si sciolgono in bocca, assorbendo meno farina.'},
+  {id:'crocche',   name:'Crocchè',          emoji:'🧆', v:'crock4all',  why:'Il basso contenuto idrico rende l\'impasto compatto: fuori croccante, dentro cremoso e vellutato.'},
+  {id:'pure',      name:'Purè',             emoji:'🥣', v:'crock4all',  why:'La pasta farinosa di Crock4All si lavora facilmente dando un purè vellutato senza grumi.'},
+  {id:'pizzapat',  name:'Pizza di patate',  emoji:'🍕', v:'crock4all',  why:'La consistenza asciutta è perfetta per impasti rustici e saporiti come la pizza di patate.'},
+  {id:'chips',     name:'Chips',            emoji:'🍟', v:'crisps4all', why:'Il bilanciamento d\'amido di Crisps4All garantisce doratura uniforme e croccantezza che dura.'},
+  {id:'frittura',  name:'Frittura',         emoji:'🔥', v:'crisps4all', why:'Crisps4All assorbe meno olio pur rimanendo perfettamente croccante e dorata.'},
+  {id:'insalata',  name:'Insalata',         emoji:'🥗', v:'talentine',  why:'Talentine mantiene la forma anche dopo la cottura: ogni fetta resta integra e invitante.'},
+  {id:'vapore',    name:'Al vapore',        emoji:'♨️', v:'talentine',  why:'Al vapore Talentine conserva texture, sapore e fino al 40% in più di vitamina C.'},
+  {id:'forno',     name:'Al forno',         emoji:'🥘', v:'talentine',  why:'Talentine regge la cottura in forno senza disfarsi, con una crosta dorata perfetta.'},
+  {id:'zuppa',     name:'Zuppa',            emoji:'🍲', v:'fresca',     why:'La polpa gialla di Fresca Campana (Sunita/Efera) si amalgama meravigliosamente nelle zuppe rendendole ricche e profumate.'},
+  {id:'contorno',  name:'Contorno',         emoji:'🌿', v:'fresca',     why:'Il sapore intenso e il colore dorato di Fresca Campana rendono ogni contorno spettacolare.'},
+];
+
+// ══════════════════════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════════════════════
+let fromScreen = 's-home';
+
+function goto(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ══════════════════════════════════════════════════════════════
+//  INIT HOME chips
+// ══════════════════════════════════════════════════════════════
+(function initHome() {
+  const c = document.getElementById('vchips');
+  Object.values(V).forEach(v => {
+    const el = document.createElement('div');
+    el.className = 'v-chip';
+    el.style.background = v.pale;
+    el.style.color = v.color;
+    el.innerHTML = `${v.emoji} ${v.name}`;
+    el.onclick = () => showResult(v.id, 's-home');
+    c.appendChild(el);
+  });
+})();
+
+// ══════════════════════════════════════════════════════════════
+//  INIT FINDER
+// ══════════════════════════════════════════════════════════════
+(function initFinder() {
+  const g = document.getElementById('dishGrid');
+  DISHES.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'dish-card';
+    el.innerHTML = `<span class="d-emoji">${d.emoji}</span><span class="d-name">${d.name}</span>`;
+    el.onclick = () => runSlot(d);
+    g.appendChild(el);
+  });
+})();
+
+// ══════════════════════════════════════════════════════════════
+//  SLOT MACHINE
+// ══════════════════════════════════════════════════════════════
+function runSlot(dish) {
+  const overlay = document.getElementById('slotOverlay');
+  const reel    = document.getElementById('slotReel');
+  const label   = document.getElementById('slotLabel');
+  const msg     = document.getElementById('slotMsg');
+
+  label.textContent = `${dish.emoji} ${dish.name}`;
+  msg.textContent   = 'Sto cercando la patata giusta…';
+
+  // Build sequence: 3 random shuffles of all varieties + winner at end
+  const all = Object.values(V);
+  const winner = V[dish.v];
+  const seq = [];
+  for (let i = 0; i < 3; i++) {
+    [...all].sort(() => Math.random() - .5).forEach(v => seq.push(v));
+  }
+  seq.push(winner); // winner always last
+
+  reel.innerHTML = seq.map(v =>
+    `<div class="slot-item">
+       <span class="si-emoji">${v.emoji}</span>
+       <span class="si-name">${v.name}</span>
+     </div>`
+  ).join('');
+
+  // Reset
+  reel.style.transition = 'none';
+  reel.style.transform  = 'translateY(0)';
+  overlay.classList.add('show');
+
+  // Animate to last item
+  const itemH = 120;
+  const targetY = -((seq.length - 1) * itemH);
+  const duration = 2.2; // seconds
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    reel.style.transition = `transform ${duration}s cubic-bezier(.15,.55,.45,1)`;
+    reel.style.transform  = `translateY(${targetY}px)`;
+  }));
+
+  setTimeout(() => {
+    msg.textContent = `✅ Eccola: ${winner.name}!`;
+    setTimeout(() => {
+      overlay.classList.remove('show');
+      showResult(dish.v, 's-finder', dish);
+    }, 900);
+  }, duration * 1000 + 100);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RESULT SCREEN
+// ══════════════════════════════════════════════════════════════
+function showResult(vid, back, dish = null) {
+  const v = V[vid];
+  fromScreen = back;
+  document.getElementById('resultBack').onclick = () => goto(back);
+
+  document.getElementById('resultHero').style.background =
+    `linear-gradient(135deg, ${v.color}dd 0%, ${v.color}99 100%)`;
+
+  document.getElementById('resultHero').innerHTML = `
+    <span class="result-emoji">${v.emoji}</span>
+    <div class="result-badge">${v.type}</div>
+    <div class="result-name">${v.name}</div>
+    <div class="result-tagline">${v.tagline}</div>
+  `;
+
+  const dishBlock = dish ? `
+    <div class="r-card" style="border-left:4px solid ${v.color};background:${v.pale}">
+      <h3>${dish.emoji} Perché per ${dish.name}?</h3>
+      <p>${dish.why}</p>
+    </div>` : '';
+
+  document.getElementById('resultContent').innerHTML = `
+    ${dishBlock}
+    <div class="r-card">
+      <h3>📖 Descrizione</h3>
+      <p>${v.desc}</p>
+    </div>
+    <div class="r-card r-tip">
+      <h3>💡 Lo sapevi?</h3>
+      <p>${v.tip}</p>
+    </div>
+    <div class="r-card">
+      <h3>✅ Ideale per</h3>
+      <div class="ideal-tags">
+        ${v.for.map(f => `<span class="ideal-tag">${f}</span>`).join('')}
+      </div>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-green" onclick="goto('s-finder')">🍳 Cerca altro piatto</button>
+      <button class="btn btn-outline" onclick="startQuiz()">🏆 Sfida Chef</button>
+    </div>
+  `;
+
+  goto('s-result');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  QUIZ
+// ══════════════════════════════════════════════════════════════
+const TOTAL = 8;
+let qQuestions = [], qIdx = 0, qScore = 0;
+
+function startQuiz() {
+  qQuestions = [...DISHES].sort(() => Math.random() - .5).slice(0, TOTAL);
+  qIdx = 0; qScore = 0;
+  document.getElementById('qScore').textContent = 0;
+  document.getElementById('qTot').textContent = TOTAL;
+  document.getElementById('qProg').style.width = '0%';
+  goto('s-quiz');
+  renderQ();
+}
+
+function renderQ() {
+  document.getElementById('qProg').style.width = `${(qIdx / TOTAL) * 100}%`;
+  document.getElementById('qNum').textContent  = Math.min(qIdx + 1, TOTAL);
+
+  if (qIdx >= TOTAL) { showQuizEnd(); return; }
+
+  const dish = qQuestions[qIdx];
+  const opts = Object.values(V).sort(() => Math.random() - .5);
+
+  document.getElementById('quizBody').innerHTML = `
+    <div class="quiz-body">
+      <span class="quiz-dish-emoji">${dish.emoji}</span>
+      <div class="quiz-q-text">Quale patata sceglieresti per…</div>
+      <div class="quiz-dish-label">"${dish.name}"?</div>
+      <div class="quiz-options">
+        ${opts.map(v => `
+          <div class="q-opt" data-vid="${v.id}" onclick="pickOpt(this,'${dish.v}','${dish.id}')">
+            <span class="qo-emoji">${v.emoji}</span>
+            <span class="qo-name">${v.name}</span>
+            <span class="qo-type">${v.type.split('•')[0].trim()}</span>
+          </div>`).join('')}
+      </div>
+      <div class="quiz-feedback" id="qFeed"></div>
+    </div>
+  `;
+}
+
+function pickOpt(el, correct, dishId) {
+  document.querySelectorAll('.q-opt').forEach(o => o.classList.add('disabled'));
+  const selected = el.dataset.vid;
+  const ok = selected === correct;
+  const dish = DISHES.find(d => d.id === dishId);
+
+  el.classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) {
+    document.querySelectorAll('.q-opt').forEach(o => {
+      if (o.dataset.vid === correct) o.classList.add('correct');
+    });
+  }
+
+  if (ok) { qScore++; document.getElementById('qScore').textContent = qScore; confetti(8); }
+
+  const feed = document.getElementById('qFeed');
+  feed.className = `quiz-feedback show ${ok ? 'fb-ok' : 'fb-err'}`;
+  feed.textContent = ok
+    ? `✅ Perfetto! ${dish.why}`
+    : `❌ Quasi! La risposta giusta era ${V[correct].name}. ${dish.why}`;
+
+  qIdx++;
+  setTimeout(renderQ, 2400);
+}
+
+function showQuizEnd() {
+  const pct = Math.round((qScore / TOTAL) * 100);
+  let emoji, msg;
+  if (pct === 100) { emoji='🏆'; msg='Perfetto! Sei un vero esperto di patate campane!'; confetti(40); }
+  else if (pct >= 75) { emoji='🌟'; msg='Ottimo! Conosci bene le nostre varietà!'; confetti(20); }
+  else if (pct >= 50) { emoji='👨‍🍳'; msg='Buona base! Riprova per diventare chef delle patate.'; }
+  else               { emoji='🥔'; msg='Le patate hanno ancora qualcosa da insegnarti… riprova!'; }
+
+  document.getElementById('quizBody').innerHTML = `
+    <div class="quiz-end">
+      <span class="qe-emoji">${emoji}</span>
+      <div class="qe-title">Quiz completato!</div>
+      <div class="qe-score">${qScore}/${TOTAL}</div>
+      <div class="qe-msg">${msg}</div>
+      <div class="qe-actions">
+        <button class="btn btn-green" onclick="startQuiz()">🔄 Rigioca</button>
+        <button class="btn btn-outline" onclick="goto('s-home')">🏠 Home</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('qProg').style.width = '100%';
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CONFETTI
+// ══════════════════════════════════════════════════════════════
+function confetti(n) {
+  const c = document.getElementById('confetti');
+  const cols = ['#2D6A4F','#C9922A','#F0C84A','#4A9068','#8B5E3C','#FFD700','#E8503A'];
+  for (let i = 0; i < n; i++) {
+    const el = document.createElement('div');
+    el.className = 'cp';
+    const size = 7 + Math.random() * 8;
+    el.style.cssText = `
+      left:${Math.random()*100}vw;
+      width:${size}px; height:${size}px;
+      background:${cols[Math.floor(Math.random()*cols.length)]};
+      border-radius:${Math.random()>.5?'50%':'3px'};
+      animation-duration:${1.4+Math.random()*1.8}s;
+      animation-delay:${Math.random()*0.4}s;
+    `;
+    c.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+}
+</script>
+</body>
+</html>
