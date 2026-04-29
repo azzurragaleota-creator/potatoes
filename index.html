@@ -411,6 +411,96 @@
     .footer a { color: var(--green-pale); text-decoration: none; }
     .footer a:hover { text-decoration: underline; }
 
+    /* ── NUTRIZIONISTA ─────────────────────────────── */
+    .nutri-top {
+      background: linear-gradient(135deg, #1A3A5C 0%, #1D5FA8 100%);
+    }
+    .mode-card.mc-full { grid-column: 1 / -1; }
+    .mode-card.mc-nutri { border-top: 4px solid #2563A8; }
+    .mode-card.mc-nutri:hover { border-color: #2563A8; }
+
+    .nutri-stage {
+      padding: 24px 20px 48px;
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .nutri-char {
+      font-size: 68px; display: block; margin-bottom: 4px;
+      transition: transform .3s ease;
+    }
+    .nutri-char.react-ok  { animation: charJump .45s ease; }
+    .nutri-char.react-err { animation: charWag .45s ease; }
+    @keyframes charJump { 0%{transform:scale(1)} 40%{transform:scale(1.3) rotate(8deg)} 100%{transform:scale(1)} }
+    @keyframes charWag  { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-14deg)} 75%{transform:rotate(14deg)} }
+
+    .nutri-char-label {
+      font-size: .78rem; color: var(--text-mid); font-weight: 700;
+      display: block; margin-bottom: 20px;
+    }
+    .claim-card {
+      background: white;
+      border-radius: var(--rl);
+      padding: 28px 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 24px var(--shadow);
+      min-height: 118px;
+      display: flex; align-items: center; justify-content: center;
+      border: 3px solid transparent;
+      transition: border-color .3s, background .3s;
+    }
+    .claim-card.ok  { border-color: #28A745; background: #F0FFF4; }
+    .claim-card.err { border-color: #DC3545; background: #FFF5F5; }
+    .claim-emoji-lead { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+    .claim-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; color: var(--text-dark);
+      line-height: 1.4; font-style: italic;
+    }
+    .verdict-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+    .vbtn {
+      padding: 17px 10px; border-radius: var(--r); border: none;
+      font-family: 'Nunito', sans-serif; font-size: 1.05rem; font-weight: 900;
+      cursor: pointer; transition: all .18s ease; letter-spacing: .02em;
+    }
+    .vbtn:hover:not(:disabled) { transform: translateY(-3px); filter: brightness(.93); }
+    .vbtn:disabled { opacity: .4; cursor: not-allowed; }
+    .vbtn-vero  { background: #D4EDDA; color: #155724; }
+    .vbtn-falso { background: #F8D7DA; color: #721C24; }
+    .vbtn.hit-ok  { background: #28A745 !important; color: white !important; }
+    .vbtn.hit-err { background: #DC3545 !important; color: white !important; }
+    .vbtn.show-correct { background: #28A745 !important; color: white !important; }
+
+    .nutri-expl {
+      background: #EEF4FF;
+      border-left: 4px solid #2563A8;
+      border-radius: var(--r);
+      padding: 16px 18px;
+      text-align: left;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .nutri-expl.show { display: block; animation: fadeUp .3s ease; }
+    .nutri-expl h4 { color: #1A3A5C; font-size: .95rem; margin-bottom: 6px; }
+    .nutri-expl p  { color: #1E3A8A; font-size: .87rem; line-height: 1.6; }
+    .nutri-stat {
+      display: inline-block; background: var(--green-pale); color: var(--green-dark);
+      border-radius: 999px; padding: 5px 14px;
+      font-size: .76rem; font-weight: 800; margin-top: 10px;
+    }
+    .nutri-next { width: 100%; margin-top: 10px; display: none; }
+    .nutri-next.show { display: block; }
+    .btn-blue { background: #2563A8; color: white; }
+    .btn-blue:hover { background: #1A3A5C; transform: translateY(-2px); }
+
+    /* nutri end */
+    .nutri-end { padding: 48px 24px; text-align: center; max-width: 500px; margin: 0 auto; }
+    .ne-char  { font-size: 84px; display: block; margin-bottom: 12px; }
+    .ne-title { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: var(--green-dark); margin-bottom: 8px; }
+    .ne-score { font-size: 3rem; font-weight: 900; color: #2563A8; margin: 14px 0; }
+    .ne-msg   { color: var(--text-mid); font-size: 1rem; line-height: 1.6; margin-bottom: 28px; }
+    .ne-actions { display: flex; gap: 12px; }
+
     /* ── RESPONSIVE ────────────────────────────────── */
     @media (max-width: 360px) {
       .mode-cards { grid-template-columns: 1fr; }
@@ -429,7 +519,7 @@
   <img src="https://www.campaniapatate.com/wp-content/uploads/2026/01/campania-patate-logo-white.svg"
        alt="Campania Patate" class="header-logo"
        onerror="this.outerHTML='<span style=\'color:white;font-family:serif;font-weight:700;font-size:1.1rem\'>🥔 Campania Patate</span>'">
-  <span class="header-badge">🎮 Il Gioco delle Patate</span>
+  <span class="header-badge">🎮 Potato Game</span>
 </header>
 
 <!-- ═══════════════════════════════ HOME ════════════════════════════════ -->
@@ -450,6 +540,11 @@
       <span class="mc-icon">👨‍🍳</span>
       <h2>Sfida Chef</h2>
       <p>Metti alla prova le tue conoscenze sulle nostre patate</p>
+    </div>
+    <div class="mode-card mc-full mc-nutri" onclick="startNutri()">
+      <span class="mc-icon">👨‍⚕️</span>
+      <h2>Il nutrizionista approva?</h2>
+      <p>Vero o Falso? Sfata i miti sulle patate e scopri la scienza che c'è dietro</p>
     </div>
   </div>
 
@@ -488,6 +583,18 @@
   </div>
   <div class="progress-bar"><div class="progress-fill" id="qProg" style="width:0%"></div></div>
   <div id="quizBody"></div>
+</div>
+
+<!-- ═══════════════════════════════ NUTRIZIONISTA ═══════════════════════ -->
+<div id="s-nutri" class="screen">
+  <div class="sub-header nutri-top">
+    <button class="back-btn" onclick="goto('s-home')">←</button>
+    <h2>Il nutrizionista approva?</h2>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="nProg" style="width:0%; background:#93C5FD"></div>
+  </div>
+  <div id="nutriBody"></div>
 </div>
 
 <!-- ═══════════════════════════════ SLOT OVERLAY ════════════════════════ -->
@@ -792,6 +899,215 @@ function showQuizEnd() {
     </div>
   `;
   document.getElementById('qProg').style.width = '100%';
+}
+
+// ══════════════════════════════════════════════════════════════
+//  NUTRIZIONISTA — dati
+// ══════════════════════════════════════════════════════════════
+const NUTRI_Q = [
+  {
+    emoji:'⚖️',
+    claim:'Le patate fanno ingrassare',
+    answer: false,
+    head:'Falso mito storico!',
+    expl:'Una patata media (150g) ha circa 120 kcal — meno di due fette di pane. Sono i condimenti (burro, panna, olio abbondante) a fare la differenza, non la patata in sé.',
+    stat:'🥔 150g di patata lessa = ~120 kcal'
+  },
+  {
+    emoji:'🍌',
+    claim:'La patata contiene più potassio della banana',
+    answer: true,
+    head:'Vero, sorprendente!',
+    expl:'Una patata media fornisce oltre 600 mg di potassio, contro i ~422 mg di una banana. Un\'alleata preziosa per cuore e muscoli spesso sottovalutata.',
+    stat:'🥔 ~600 mg K vs 🍌 ~422 mg K'
+  },
+  {
+    emoji:'🌾',
+    claim:'Le patate contengono glutine',
+    answer: false,
+    head:'Completamente falso!',
+    expl:'Le patate sono naturalmente gluten-free al 100%. Sono quindi perfette per celiaci e per chi segue una dieta priva di glutine, senza alcuna modifica.',
+    stat:'Patata: 0% glutine ✓'
+  },
+  {
+    emoji:'🫙',
+    claim:'La buccia della patata va sempre eliminata',
+    answer: false,
+    head:'Tutt\'altro!',
+    expl:'La buccia è la parte più ricca di fibre, vitamine del gruppo B e minerali come il ferro. Lavala bene e tienila: è il meglio della patata.',
+    stat:'La buccia contiene fino al 50% delle fibre totali'
+  },
+  {
+    emoji:'🌡️',
+    claim:'La patata raffreddata è più digeribile di quella calda',
+    answer: true,
+    head:'Vero, la fisica aiuta!',
+    expl:'Raffreddando la patata cotta, l\'amido si trasforma in "amido resistente": abbassa l\'indice glicemico e si comporta come una fibra alimentare, nutrendo i batteri buoni dell\'intestino.',
+    stat:'Amido resistente = indice glicemico ridotto'
+  },
+  {
+    emoji:'🍋',
+    claim:'Una patata media copre il 30% del fabbisogno giornaliero di vitamina C',
+    answer: true,
+    head:'Vero!',
+    expl:'Spesso dimenticata come fonte di vitamina C, la patata è un\'ottima alleata del sistema immunitario — soprattutto cotta al vapore, che ne preserva di più rispetto alla bollitura.',
+    stat:'~30% RDA di vitamina C per 150g'
+  },
+  {
+    emoji:'❤️',
+    claim:'Le patate aumentano il colesterolo',
+    answer: false,
+    head:'Falso!',
+    expl:'Le patate fresche sono naturalmente prive di grassi e colesterolo. Sono i metodi di cottura con grassi saturi (strutto, burro) a influire sul colesterolo, non la patata stessa.',
+    stat:'Patata fresca: 0g grassi, 0mg colesterolo'
+  },
+  {
+    emoji:'💚',
+    claim:'Le patate verdi sono innocue come le altre',
+    answer: false,
+    head:'Attenzione, falso!',
+    expl:'Le parti verdi producono solanina, un alcaloide tossico che si accumula quando la patata è esposta alla luce. Va eliminata sempre tutta la parte verde prima della cottura.',
+    stat:'⚠️ Parte verde = solanina, da rimuovere sempre'
+  },
+  {
+    emoji:'♨️',
+    claim:'Cuocere al vapore conserva più nutrienti che bollire in acqua',
+    answer: true,
+    head:'Esatto, la scienza lo conferma!',
+    expl:'La bollitura disperde nell\'acqua fino al 40% della vitamina C e altri nutrienti idrosolubili. Al vapore si conserva molto di più, e anche il sapore ne guadagna.',
+    stat:'Vapore vs bollitura: +40% vitamina C conservata'
+  },
+  {
+    emoji:'💪',
+    claim:'Le patate non contengono nessuna proteina',
+    answer: false,
+    head:'Falso!',
+    expl:'Le patate contengono circa 2g di proteine ogni 100g, di discreta qualità biologica. Non sono un alimento proteico, ma contribuiscono comunque all\'apporto giornaliero.',
+    stat:'~2g proteine per 100g di patata'
+  },
+  {
+    emoji:'🍅',
+    claim:'Patate e pomodori appartengono alla stessa famiglia botanica',
+    answer: true,
+    head:'Vero, sono parenti!',
+    expl:'Patate, pomodori, peperoni e melanzane sono tutti Solanacee. Una grande famiglia botanica originaria delle Americhe che ha rivoluzionato la cucina mondiale.',
+    stat:'Famiglia Solanaceae 🌿'
+  },
+  {
+    emoji:'🛍️',
+    claim:'Le patatine in busta hanno circa le stesse calorie della patata fresca',
+    answer: false,
+    head:'Grandissima differenza!',
+    expl:'La patata fresca ha ~80 kcal/100g. Le patatine in busta arrivano a oltre 530 kcal/100g, con aggiunta di sale, grassi saturi, aromi e conservanti artificiali.',
+    stat:'Patata fresca: ~80 kcal vs Chips: ~530 kcal per 100g'
+  },
+];
+
+const N_TOTAL = 10;
+let nQ = [], nIdx = 0, nScore = 0;
+
+function startNutri() {
+  nQ = [...NUTRI_Q].sort(() => Math.random() - .5).slice(0, N_TOTAL);
+  nIdx = 0; nScore = 0;
+  document.getElementById('nProg').style.width = '0%';
+  goto('s-nutri');
+  renderNutri();
+}
+
+function renderNutri() {
+  document.getElementById('nProg').style.width = `${(nIdx / N_TOTAL) * 100}%`;
+  if (nIdx >= N_TOTAL) { showNutriEnd(); return; }
+
+  const q = nQ[nIdx];
+  document.getElementById('nutriBody').innerHTML = `
+    <div class="nutri-stage">
+      <span class="nutri-char" id="nChar">👨‍⚕️</span>
+      <span class="nutri-char-label">Domanda ${nIdx + 1} di ${N_TOTAL} — Vero o Falso?</span>
+
+      <div class="claim-card" id="nCard">
+        <div>
+          <span class="claim-emoji-lead">${q.emoji}</span>
+          <div class="claim-text">"${q.claim}"</div>
+        </div>
+      </div>
+
+      <div class="verdict-btns">
+        <button class="vbtn vbtn-vero"  id="btnV" onclick="pickNutri(true)">✅ VERO</button>
+        <button class="vbtn vbtn-falso" id="btnF" onclick="pickNutri(false)">❌ FALSO</button>
+      </div>
+
+      <div class="nutri-expl" id="nExpl">
+        <h4 id="nHead"></h4>
+        <p  id="nText"></p>
+        <span class="nutri-stat" id="nStat"></span>
+      </div>
+
+      <button class="btn btn-blue nutri-next" id="nNext" onclick="renderNutri()">
+        Prossima domanda →
+      </button>
+    </div>
+  `;
+}
+
+function pickNutri(choice) {
+  document.getElementById('btnV').disabled = true;
+  document.getElementById('btnF').disabled = true;
+
+  const q = nQ[nIdx];
+  const ok = (choice === q.answer);
+  const char = document.getElementById('nChar');
+  const card = document.getElementById('nCard');
+
+  char.classList.add(ok ? 'react-ok' : 'react-err');
+  char.textContent = ok ? '🎉' : '🤔';
+  card.classList.add(ok ? 'ok' : 'err');
+
+  // colora i pulsanti
+  const bV = document.getElementById('btnV');
+  const bF = document.getElementById('btnF');
+  if (choice === true)  bV.classList.add(ok ? 'hit-ok' : 'hit-err');
+  if (choice === false) bF.classList.add(ok ? 'hit-ok' : 'hit-err');
+  // mostra sempre quello corretto in verde
+  if (q.answer === true)  bV.classList.add('show-correct');
+  if (q.answer === false) bF.classList.add('show-correct');
+
+  if (ok) { nScore++; confetti(6); }
+
+  document.getElementById('nHead').textContent = (ok ? '✅ ' : '❌ ') + q.head;
+  document.getElementById('nText').textContent = q.expl;
+  document.getElementById('nStat').textContent = q.stat;
+  document.getElementById('nExpl').classList.add('show');
+
+  nIdx++;
+  setTimeout(() => {
+    const nxt = document.getElementById('nNext');
+    nxt.classList.add('show');
+    nxt.textContent = nIdx >= N_TOTAL ? '🏁 Vedi il risultato finale' : 'Prossima domanda →';
+  }, 1300);
+}
+
+function showNutriEnd() {
+  const pct = Math.round((nScore / N_TOTAL) * 100);
+  let char, msg;
+  if (pct === 100)    { char='🏆'; msg='Incredibile! Sei un vero esperto di nutrizione della patata!'; confetti(40); }
+  else if (pct >= 80) { char='🌟'; msg='Ottimo! Il nutrizionista è molto soddisfatto di te.'; confetti(20); }
+  else if (pct >= 60) { char='👨‍⚕️'; msg='Buona base! Qualche mito resiste ancora, ma sei sulla strada giusta.'; }
+  else if (pct >= 40) { char='🤔'; msg='Il nutrizionista ti prescrive: ripassare la scienza delle patate!'; }
+  else                { char='🥔'; msg='Tanti miti ancora da sfatare! Riprova e impara qualcosa di nuovo.'; }
+
+  document.getElementById('nutriBody').innerHTML = `
+    <div class="nutri-end">
+      <span class="ne-char">${char}</span>
+      <div class="ne-title">Responso del Nutrizionista</div>
+      <div class="ne-score">${nScore}/${N_TOTAL}</div>
+      <div class="ne-msg">${msg}</div>
+      <div class="ne-actions">
+        <button class="btn btn-blue" onclick="startNutri()">🔄 Riprova</button>
+        <button class="btn btn-outline" onclick="goto('s-home')">🏠 Home</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('nProg').style.width = '100%';
 }
 
 // ══════════════════════════════════════════════════════════════
